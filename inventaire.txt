@@ -8,3 +8,6 @@ bootstrap_user=khanh
 [webservers]
 node2
 node3
+
+[webservers:vars]
+bootstrap_motd=Serveur bootstrapé par ansible

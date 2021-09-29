@@ -7,19 +7,20 @@
     ansible.builtin.user:
       name: "{{bootstrap_user}}"
       state: present
+    register: bootstrap_infos_user
   - name: "Change dir permission"
     ansible.builtin.file:
       path: "/home/{{bootstrap_user}}/.ssh"
       state: directory
       owner: "{{bootstrap_user}}"
-      group: "{{bootstrap_user}}"
+      group: "{{bootstrap_infos_user.group}}"
       mode: '0700'
   - name: "Copy keys"
     ansible.builtin.copy:
       src: /home/vagrant/.ssh/authorized_keys
       dest: "/home/{{bootstrap_user}}/.ssh/authorized_keys"
       owner: "{{bootstrap_user}}"
-      group: "{{bootstrap_user}}"
+      group: "{{bootstrap_infos_user.group}}"
       mode: '0600'
   - name: "ping server"
     become: false
@@ -45,7 +46,7 @@
       - Message de fin
   - name: "Copy motd"
     ansible.builtin.copy:
-      src: /home/vagrant/ansible/motd
+      content: "{{bootstrap_motd}}"
       dest: /etc/motd
     notify: 
       - Message de fin
