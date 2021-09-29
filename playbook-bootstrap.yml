@@ -2,27 +2,29 @@
 ---
 - hosts: all
   become: true
+  vars:
+    bootstrap_user: khanh
   tasks:
-  - name: "Create user khanh"
+  - name: "Create user"
     ansible.builtin.user:
-      name: khanh
+      name: "{{bootstrap_user}}"
       state: present
   - name: "Change dir permission"
     ansible.builtin.file:
-      path: /home/khanh/.ssh
+      path: "/home/{{bootstrap_user}}/.ssh"
       state: directory
-      owner: khanh
-      group: khanh
+      owner: "{{bootstrap_user}}"
+      group: "{{bootstrap_user}}"
       mode: '0700'
   - name: "Copy keys"
     ansible.builtin.copy:
       src: /home/vagrant/.ssh/authorized_keys
-      dest: /home/khanh/.ssh/authorized_keys
-      owner: khanh
-      group: khanh
+      dest: "/home/{{bootstrap_user}}/.ssh/authorized_keys"
+      owner: "{{bootstrap_user}}"
+      group: "{{bootstrap_user}}"
       mode: '0600'
 - hosts: all
-  remote_user: khanh
+  remote_user: "{{bootstrap_user}}"
   tasks:
   - name: "ping server"
     ping: ~
