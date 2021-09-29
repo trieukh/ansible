@@ -23,11 +23,10 @@
       owner: "{{bootstrap_user}}"
       group: "{{bootstrap_user}}"
       mode: '0600'
-- hosts: all
-  remote_user: "{{bootstrap_user}}"
-  tasks:
   - name: "ping server"
     ping: ~
+    remote_user: "{{bootstrap_user}}"
+    when: not ansible_check_mode
 - hosts: all
   become: true
   handlers:
