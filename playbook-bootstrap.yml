@@ -36,13 +36,14 @@
       - vim-enhanced
       - bash-completion
      state: latest 
+    register: etat_packages
   - name: "Copy motd"
     ansible.builtin.copy:
       src: /home/vagrant/ansible/motd
       dest: /etc/motd
   - name: "Fin"
-    when: "installation paquet" is changed
+    when: etat_packages is changed
     ansible.builtin.debug:
-      msg: bootstrapping terminé
+      msg: bootstrapping terminé avec install
  
 
