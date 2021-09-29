@@ -35,14 +35,16 @@
       - tmux
       - vim-enhanced
       - bash-completion
+      - tree
      state: latest 
     register: etat_packages
   - name: "Copy motd"
     ansible.builtin.copy:
       src: /home/vagrant/ansible/motd
       dest: /etc/motd
+    register: etat_motd
   - name: "Fin"
-    when: etat_packages is changed
+    when: etat_packages is changed or etat_motd is changed
     ansible.builtin.debug:
       msg: bootstrapping terminé avec install
  
