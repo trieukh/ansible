@@ -1,0 +1,44 @@
+# Création d'un dépot
+    1  git init formation
+
+# ajout/modif d'un fichier
+    6  git add test.txt
+
+# status du dépot
+    7  git status
+
+# commit les changements
+    8  git commit -m "Premiere version"
+
+# modif configuration
+    9  git config --global user.name "Khanh"
+   10  git config --global user.email "Khanh@example.com"
+
+# lister les paramètres de config
+   11  git config --list
+
+# visualiser l'historique des versions
+   13  git log
+
+# log réduit sur une ligne
+git log --oneline
+
+# affiche les stats de modifications
+   21  git log --oneline --stat
+
+# affiche le diff
+   22  git log -p
+
+git log --since "10 minutes ago" --until "5 minutes ago"
+
+# suppression de fichier
+rm + git add ou git rm
+
+# restauration derniere version dépot
+git checkout -- fichier
+# restauration depuis une version
+git checkout <id_version> fichier
+# restauration version n-1
+git checkout HEAD~ fichier 
+git checkout COMMIT_ID : détacher la tête pour visualiser le dépôt à la version COMMIT_ID
+git checkout master : repositionner la tête (head) sur master

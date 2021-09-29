@@ -1,0 +1,29 @@
+# Petit playbook
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: "Create user khanh"
+    ansible.builtin.user:
+      name: khanh
+      state: present
+  - name: "Change dir permission"
+    ansible.builtin.file:
+      path: /home/khanh/.ssh
+      state: directory
+      owner: khanh
+      group: khanh
+      mode: '0700'
+  - name: "Copy keys"
+    ansible.builtin.copy:
+      src: /home/vagrant/.ssh/authorized_keys
+      dest: /home/khanh/.ssh/authorized_keys
+      owner: khanh
+      group: khanh
+      mode: '0600'
+- hosts: all
+  remote_user: khanh
+  tasks:
+  - name: "ping server"
+    ping: ~
+     # data: "poong"
