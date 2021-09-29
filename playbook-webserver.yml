@@ -1,0 +1,27 @@
+# Petit playbook pour créer un web server
+---
+- hosts: webservers
+  become: true
+  tasks:
+  - name: "installation httpd"
+    package:
+      name: httpd
+      state: present 
+  - name: "start httpd"
+    ansible.builtin.service:
+      name: httpd
+      state: started
+      enabled: true
+  - name: "stop firewall"
+    ansible.builtin.service:
+      name: firewalld
+      state: stopped
+  - name: "Copy index.html"
+    ansible.builtin.copy:
+      content: Coucou c'est Ansible
+      dest: /var/www/html/index.html
+      mode: "0644"
+
+
+ 
+
