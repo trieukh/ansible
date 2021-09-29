@@ -2,8 +2,6 @@
 ---
 - hosts: all
   become: true
-  vars:
-    bootstrap_user: khanh
   tasks:
   - name: "Create user"
     ansible.builtin.user:
@@ -24,6 +22,7 @@
       group: "{{bootstrap_user}}"
       mode: '0600'
   - name: "ping server"
+    become: false
     ping: ~
     remote_user: "{{bootstrap_user}}"
     when: not ansible_check_mode

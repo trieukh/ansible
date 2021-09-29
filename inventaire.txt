@@ -1,5 +1,8 @@
-node2
+node2 bootstrap_user=khanh2
 node3
+
+[all:vars]
+bootstrap_user=khanh
 
 # Groupe pour apache
 [webservers]
