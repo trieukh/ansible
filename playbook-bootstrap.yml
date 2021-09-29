@@ -26,4 +26,23 @@
   tasks:
   - name: "ping server"
     ping: ~
-     # data: "poong"
+- hosts: all
+  become: true
+  tasks:
+  - name: "installation paquet"
+    package:
+     name: 
+      - tmux
+      - vim-enhanced
+      - bash-completion
+     state: latest 
+  - name: "Copy motd"
+    ansible.builtin.copy:
+      src: /home/vagrant/ansible/motd
+      dest: /etc/motd
+  - name: "Fin"
+    when: "installation paquet" is changed
+    ansible.builtin.debug:
+      msg: bootstrapping terminé
+ 
+
