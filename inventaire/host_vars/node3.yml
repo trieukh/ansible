@@ -1,2 +1,3 @@
 bootstrap_motd: "Je suis node3" 
-webserver_site: site3
+webserver_sites: 
+  - site3
