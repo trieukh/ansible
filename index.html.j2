@@ -1,0 +1,13 @@
+    Coucou avec template
+    Inventory Hostname: {{inventory_hostname}}
+    {{bootstrap_motd | default('Message par defaut')}}
+    Hostname: {{ansible_hostname}}
+    Et c'est {{ (inventory_hostname == ansible_hostname) | ternary('bien','mal')}}
+    Je répète : {% if (inventory_hostname == ansible_hostname) %}
+    bien
+    {% else %}
+    mal
+    {% endif %}
+    Distrib:{{ansible_distribution}}
+    Version:{{ansible_kernel_version}}
+    IP: {{ansible_eth0.ipv4.address}}
