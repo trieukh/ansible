@@ -18,7 +18,7 @@
       state: stopped
   - name: "Copy index.html"
     ansible.builtin.copy:
-      content: Coucou c'est Ansible
+      content: "Coucou\n{{bootstrap_motd | default('Message par defaut')}}\n"
       dest: /var/www/html/index.html
       mode: "0644"
 

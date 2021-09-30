@@ -1,5 +1,6 @@
 node2 bootstrap_user=khanh2
-node3
+node3 bootstrap_motd="Je suis node3" 
+node4 bootstrap_user=vagrant
 
 [all:vars]
 bootstrap_user=khanh
@@ -10,4 +11,4 @@ node2
 node3
 
 [webservers:vars]
-bootstrap_motd=Serveur bootstrapé par ansible
+#bootstrap_motd=Serveur bootstrapé par ansible

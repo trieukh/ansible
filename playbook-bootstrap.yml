@@ -27,6 +27,14 @@
     ping: ~
     remote_user: "{{bootstrap_user}}"
     when: not ansible_check_mode
+  - name: "Conf reseau interfaces"
+    ansible.builtin.copy:
+      src: interfaces
+      dest: "/etc/network/interfaces"
+      owner: root
+      group: root
+      mode: '0644'
+    when: ansible_os_family == 'Debian'
 - hosts: all
   become: true
   handlers:
@@ -38,15 +46,31 @@
     package:
      name: 
       - tmux
-      - vim-enhanced
       - bash-completion
       - tree
      state: latest 
     notify: 
       - Message de fin
+  - name: "installation vim Redhat"
+    package:
+     name: 
+      - vim-enhanced
+     state: present
+    when: ansible_os_family == 'RedHat'
+    notify: 
+      - Message de fin  
+  - name: "installation vim Debian"
+    package:
+     name: 
+      - vim
+     state: present
+    when: ansible_os_family == 'Debian'
+    notify: 
+      - Message de fin
+
   - name: "Copy motd"
     ansible.builtin.copy:
-      content: "{{bootstrap_motd}}"
+      content: "Hostname: {{ansible_hostname}}, Distrib:{{ansible_distribution}}, Version:{{ansible_kernel_version}}"
       dest: /etc/motd
     notify: 
       - Message de fin
