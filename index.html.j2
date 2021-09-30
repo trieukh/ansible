@@ -1,4 +1,4 @@
-    Coucou avec template
+Coucou avec template
     Inventory Hostname: {{inventory_hostname}}
     {{bootstrap_motd | default('Message par defaut')}}
     Hostname: {{ansible_hostname}}
@@ -11,3 +11,7 @@
     Distrib:{{ansible_distribution}}
     Version:{{ansible_kernel_version}}
     IP: {{ansible_eth0.ipv4.address}}
+Point de montage:
+    {% for pm in ansible_mounts %}
+    {{ pm.mount}} : {{pm.device}}
+    {% endfor %}
