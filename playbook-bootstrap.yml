@@ -27,6 +27,18 @@
     ping: ~
     remote_user: "{{bootstrap_user}}"
     when: not ansible_check_mode
+
+- hosts: all
+  become: true
+  handlers:
+    - name: "Message de fin"
+      ansible.builtin.debug:
+        msg: bootstrapping terminé avec install
+    - name: Redémarrage réseau
+      service:
+        name: networking
+        state: restarted     
+  tasks:
   - name: "Conf reseau interfaces"
     ansible.builtin.copy:
       src: interfaces
@@ -34,14 +46,10 @@
       owner: root
       group: root
       mode: '0644'
-    when: ansible_os_family == 'Debian'
-- hosts: all
-  become: true
-  handlers:
-    - name: "Message de fin"
-      ansible.builtin.debug:
-        msg: bootstrapping terminé avec install
-  tasks:
+    when: ansible_os_family == 'Debian'   
+    notify: [Redémarrage réseau]
+  - name: "Force execution handler"
+    meta: flush_handlers
   - name: "installation paquet"
     package:
      name: 

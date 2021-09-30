@@ -2,20 +2,25 @@
 ---
 - hosts: webservers
   become: true
+  vars:
+    webserver_name:
+      RedHat: httpd
+      Debian: apache2
   tasks:
   - name: "installation httpd"
     package:
-      name: httpd
+      name: "{{webserver_name[ansible_os_family]}}"
       state: present 
   - name: "start httpd"
     ansible.builtin.service:
-      name: httpd
+      name: "{{webserver_name[ansible_os_family]}}"
       state: started
       enabled: true
   - name: "stop firewall"
     ansible.builtin.service:
       name: firewalld
       state: stopped
+    when: ansible_os_family == 'RedHat'
   - name: "Copy index.html"
     ansible.builtin.copy:
       content: "Coucou\n{{bootstrap_motd | default('Message par defaut')}}\n"
