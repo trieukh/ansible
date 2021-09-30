@@ -15,3 +15,13 @@ Point de montage:
     {% for pm in ansible_mounts %}
     {{ pm.mount}} : {{pm.device}}
     {% endfor %}
+Device disks:
+    {% for id, liens in ansible_device_links.ids.items() %}
+    {# autre possibilite : dico | dictsort : tri + extraction cle, valeur#}
+    {{ id }} {{liens.0}}
+    {% endfor %}
+
+Web servers:
+{% for srv in groups.webservers %}
+{{ srv }} {{ hostvars[srv].ansible_eth0.ipv4.address}}
+{% endfor %}

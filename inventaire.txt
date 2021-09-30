@@ -13,4 +13,4 @@ node3
 node4
 
 [webservers:vars]
-#bootstrap_motd=Serveur bootstrapé par ansible
+webserver_sites=site1,site2

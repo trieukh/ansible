@@ -21,6 +21,14 @@
       name: firewalld
       state: stopped
     when: ansible_os_family == 'RedHat'
+  - name : recup fait sur node3'
+    setup:
+      filter: ansible_eth0
+    delegate_to: node3
+    delegate_facts: true
+  - name : debug
+    debug :
+      vars: hostvars[srv].ansible_eth0.ipv4.address
   - name: "Copy index.html"
     ansible.builtin.template:
       src: index.html.j2

@@ -1,0 +1,11 @@
+node2 
+node3 
+node4 
+node1
+
+# Groupe pour apache
+[webservers]
+node2
+node3
+node4
+
