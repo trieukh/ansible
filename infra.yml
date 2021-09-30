@@ -1,7 +1,17 @@
 # Playbook general, notre point d'entrée
-- import_playbook: playbook-bootstrap.yml
+
+- hosts: all
+  become: true
   tags:
     - bootstrap
-- import_playbook: playbook-webserver.yml
+  roles: 
+    - role: bootstrap
+      bootstrap_motd: "motd dans le role"
+
+
+- hosts: webservers
+  become: true
   tags:
+    - webserver
+  roles: 
     - webserver
