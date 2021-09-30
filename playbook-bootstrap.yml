@@ -27,7 +27,9 @@
     ping: ~
     remote_user: "{{bootstrap_user}}"
     when: not ansible_check_mode
-
+  - name: "Correction hostname"
+    hostname:
+      name: "{{inventory_hostname}}"
 - hosts: all
   become: true
   handlers:
@@ -74,8 +76,7 @@
      state: present
     when: ansible_os_family == 'Debian'
     notify: 
-      - Message de fin
-
+      - Message de fin      
   - name: "Copy motd"
     ansible.builtin.copy:
       content: "Hostname: {{ansible_hostname}}, Distrib:{{ansible_distribution}}, Version:{{ansible_kernel_version}}"
