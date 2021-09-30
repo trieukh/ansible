@@ -2,51 +2,29 @@
 ---
 - hosts: webservers
   become: true
-  vars:
-    webserver_name:
-      RedHat: httpd
-      Debian: apache2
   tasks:
+  - include_vars: "vars-webserver-{{ansible_os_family | lower}}.yml"
+    tags: always
   - name: "installation httpd"
+    tags: system
     package:
-      name: "{{webserver_name[ansible_os_family]}}"
+      name: "{{webserver_name}}"
       state: present 
   - name: "start httpd"
+    tags: system
     ansible.builtin.service:
-      name: "{{webserver_name[ansible_os_family]}}"
+      name: "{{webserver_name}}"
       state: started
       enabled: true
   - name: "stop firewall"
+    tags: system
     ansible.builtin.service:
       name: firewalld
       state: stopped
     when: ansible_os_family == 'RedHat'
-  - name : recup fait sur node3'
-    setup:
-      filter: ansible_eth0
-    delegate_to: "{{item}}"
-    delegate_facts: true
-    loop: "{{ groups.webservers }}"
-    when: inventory_hostname != item
-  - name : debug
-    debug :
-      var: hostvars['node3'].ansible_eth0.ipv4.address
-  - name: "Copy index.html"
-    ansible.builtin.template:
-      src: index.html.j2
-      dest: /var/www/html/index.html
-      mode: "0644"
-  - name: Creation repertoire site
-    file:
-      state: directory
-      path: "/var/www/html/{{item}}"
-    loop: "{{ webserver_sites }}"
-  - name: "Deploiement site"
-    ansible.builtin.copy:
-      content: "Ce site est {{item}}"
-      dest: "/var/www/html/{{item}}/index.html"
-      mode: "0644"
-    loop: "{{ webserver_sites }}"
+  - import_tasks: tasks-webserver-sites.yml
+    tags:
+      - sites
 
 
  

@@ -1,0 +1,28 @@
+  - name : recup fait sur node3'
+    setup:
+      filter: ansible_eth0
+    delegate_to: "{{item}}"
+    delegate_facts: true
+    loop: "{{ groups.webservers }}"
+    when: inventory_hostname != item
+  - name: "Copy index.html"
+    ansible.builtin.template:
+      src: index.html.j2
+      dest: /var/www/html/index.html
+      mode: "0644"
+  - name: Creation repertoire site
+    file:
+      state: directory
+      path: "/var/www/html/{{item}}"
+    register: etat_sites
+    loop: "{{ webserver_sites }}"
+  - name : debug
+    debug :
+      var: item.path
+    loop: "{{ etat_sites.results }}"
+  - name: "Deploiement site"
+    ansible.builtin.copy:
+      content: "Ce site est {{item}}"
+      dest: "/var/www/html/{{item}}/index.html"
+      mode: "0644"
+    loop: "{{ webserver_sites }}"
