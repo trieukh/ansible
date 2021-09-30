@@ -1,0 +1,9 @@
+- name: "Conf reseau interfaces"
+  ansible.builtin.copy:
+    src: interfaces
+    dest: "/etc/network/interfaces"
+    owner: root
+    group: root
+    mode: '0644'
+  when: ansible_os_family == 'Debian'   
+  notify: [Redémarrage réseau]

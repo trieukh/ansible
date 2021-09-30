@@ -1,6 +1,8 @@
   - name : recup fait sur node3'
     setup:
-      filter: ansible_eth0
+      filter: 
+        - ansible_eth0
+        - ansible_distribution
     delegate_to: "{{item}}"
     delegate_facts: true
     loop: "{{ groups.webservers }}"

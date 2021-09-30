@@ -1,0 +1,17 @@
+
+- import_tasks: tasks-bootstrap-userconf.yml
+  tags:
+    - userconf
+- import_tasks: tasks-bootstrap-network.yml
+  tags:
+    - network
+- import_tasks: tasks-bootstrap-install.yml
+  tags:
+    - install 
+- name: "Copy motd"
+  ansible.builtin.copy:
+    content: "Hostname: {{ansible_hostname}}, Distrib:{{ansible_distribution}}, Version:{{ansible_kernel_version}}"
+    dest: /etc/motd
+  notify: 
+    - Message de fin
+  

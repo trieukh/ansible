@@ -1,0 +1,7 @@
+- name: "Message de fin"
+  ansible.builtin.debug:
+    msg: bootstrapping terminé avec install
+- name: Redémarrage réseau
+  service:
+    name: networking
+    state: restarted    

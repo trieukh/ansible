@@ -1,3 +1,10 @@
+# Taches pour le role webserver
+---
+# Si on utilises -t tag le gathering facts n'est pas toujours fait
+
+- setup: ~
+  tags: 
+    - always  
 - include_vars: "vars-webserver-{{ansible_os_family | lower}}.yml"
   tags: always
 - name: "installation httpd"

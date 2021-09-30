@@ -1,0 +1,27 @@
+- name: "Force execution handler"
+  meta: flush_handlers
+- name: "installation paquet"
+  package:
+    name: 
+    - tmux
+    - bash-completion
+    - tree
+    state: latest 
+  notify: 
+    - Message de fin
+- name: "installation vim Redhat"
+  package:
+    name: 
+    - vim-enhanced
+    state: present
+  when: ansible_os_family == 'RedHat'
+  notify: 
+    - Message de fin  
+- name: "installation vim Debian"
+  package:
+    name: 
+    - vim
+    state: present
+  when: ansible_os_family == 'Debian'
+  notify: 
+    - Message de fin      
