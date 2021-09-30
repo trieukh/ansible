@@ -1,0 +1,7 @@
+# Playbook general, notre point d'entrée
+- import_playbook: playbook-bootstrap.yml
+  tags:
+    - bootstrap
+- import_playbook: playbook-webserver.yml
+  tags:
+    - webserver

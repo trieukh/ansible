@@ -1,0 +1,22 @@
+- include_vars: "vars-webserver-{{ansible_os_family | lower}}.yml"
+  tags: always
+- name: "installation httpd"
+  tags: system
+  package:
+    name: "{{webserver_name}}"
+    state: present 
+- name: "start httpd"
+  tags: system
+  ansible.builtin.service:
+    name: "{{webserver_name}}"
+    state: started
+    enabled: true
+- name: "stop firewall"
+  tags: system
+  ansible.builtin.service:
+    name: firewalld
+    state: stopped
+  when: ansible_os_family == 'RedHat'
+- import_tasks: tasks-webserver-sites.yml
+  tags:
+    - sites
