@@ -1,6 +1,2 @@
 # Petit playbook
 ---
-- hosts: all
-  become: true
-  roles: 
-    - bootstrap

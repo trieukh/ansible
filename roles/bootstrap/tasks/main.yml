@@ -10,7 +10,7 @@
     - install 
 - name: "Copy motd"
   ansible.builtin.copy:
-    content: "Hostname: {{ansible_hostname}}, Distrib:{{ansible_distribution}}, Version:{{ansible_kernel_version}}"
+    content: "{{bootstrap_motd}}, Hostname: {{ansible_hostname}}, Distrib:{{ansible_distribution}}, Version:{{ansible_kernel_version}}"
     dest: /etc/motd
   notify: 
     - Message de fin
